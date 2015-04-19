@@ -13,7 +13,6 @@
     <EntitySet Name="OverDues" EntityType="LibraryModel.Store.OverDues" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Copies" EntityType="LibraryModel.Store.Copies" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Media" EntityType="LibraryModel.Store.Media" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="AccessTokens" EntityType="LibraryModel.Store.AccessTokens" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Media_Book" EntityType="LibraryModel.Store.Media_Book" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Media_Video" EntityType="LibraryModel.Store.Media_Video" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Media_Audio" EntityType="LibraryModel.Store.Media_Audio" store:Type="Tables" Schema="dbo" />
@@ -45,10 +44,6 @@
       <End Role="Copy" EntitySet="Copies" />
       <End Role="CheckedOut" EntitySet="CheckedOuts" />
     </AssociationSet>
-    <AssociationSet Name="AccessTokenCustomer" Association="LibraryModel.Store.AccessTokenCustomer">
-      <End Role="AccessToken" EntitySet="AccessTokens" />
-      <End Role="Customer" EntitySet="Customers" />
-    </AssociationSet>
     <AssociationSet Name="FK_Book_inherits_Media" Association="LibraryModel.Store.FK_Book_inherits_Media">
       <End Role="Media" EntitySet="Media" />
       <End Role="Book" EntitySet="Media_Book" />
@@ -72,8 +67,6 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
     <Property Name="JoinDate" Type="datetime" Nullable="false" />
-    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Librarians">
     <Key>
@@ -132,14 +125,6 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Publisher" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AccessTokens">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
-    <Property Name="Customer_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Media_Book">
     <Key>
@@ -250,18 +235,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AccessTokenCustomer">
-    <End Role="AccessToken" Type="LibraryModel.Store.AccessTokens" Multiplicity="*" />
-    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AccessToken">
-        <PropertyRef Name="Customer_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Book_inherits_Media">
     <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -344,11 +317,6 @@
             <End Role="Copy" EntitySet="Copies" />
             <End Role="CheckedOut" EntitySet="CheckedOuts" />
           </AssociationSet>
-          <EntitySet Name="AccessTokens" EntityType="LibraryModel.AccessToken" />
-          <AssociationSet Name="AccessTokenCustomer" Association="LibraryModel.AccessTokenCustomer">
-            <End Role="AccessToken" EntitySet="AccessTokens" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
           <Key>
@@ -360,11 +328,8 @@
           <Property Name="Email" Type="String" Nullable="false" />
           <Property Name="Phone" Type="String" Nullable="false" />
           <Property Name="JoinDate" Type="DateTime" Nullable="false" />
-          <Property Name="Username" Type="String" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" Nullable="false" />
           <NavigationProperty Name="Resevations" Relationship="LibraryModel.CustomerResevation" FromRole="Customer" ToRole="Resevation" />
           <NavigationProperty Name="CheckedOuts" Relationship="LibraryModel.CustomerCheckedOut" FromRole="Customer" ToRole="CheckedOut" />
-          <NavigationProperty Name="AccessTokens" Relationship="LibraryModel.AccessTokenCustomer" FromRole="Customer" ToRole="AccessToken" />
         </EntityType>
         <EntityType Name="Librarian">
           <Key>
@@ -497,18 +462,6 @@
           <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
           <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="1" />
         </Association>
-        <EntityType Name="AccessToken">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="LibraryModel.AccessTokenCustomer" FromRole="AccessToken" ToRole="Customer" />
-        </EntityType>
-        <Association Name="AccessTokenCustomer">
-          <End Type="LibraryModel.AccessToken" Role="AccessToken" Multiplicity="1" />
-          <End Type="LibraryModel.Customer" Role="Customer" Multiplicity="1" />
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -524,8 +477,6 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -611,14 +562,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AccessTokens">
-      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.AccessToken)">
-        <MappingFragment StoreEntitySet="AccessTokens">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <AssociationSetMapping Name="CheckedOutOverDue" TypeName="LibraryModel.CheckedOutOverDue" StoreEntitySet="OverDues">
       <EndProperty Name="CheckedOut">
         <ScalarProperty Name="Id" ColumnName="CheckedOut_Id" />
@@ -648,14 +591,6 @@
         <ScalarProperty Name="Id" ColumnName="CheckedOut_Id" />
       </EndProperty>
       <EndProperty Name="Copy">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="AccessTokenCustomer" TypeName="LibraryModel.AccessTokenCustomer" StoreEntitySet="AccessTokens">
-      <EndProperty Name="Customer">
-        <ScalarProperty Name="Id" ColumnName="Customer_Id" />
-      </EndProperty>
-      <EndProperty Name="AccessToken">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>

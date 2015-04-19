@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/19/2015 14:21:37
+-- Date Created: 04/19/2015 15:01:31
 -- Generated from EDMX file: C:\Users\ACM Admin\Source\Repos\LibrarySystem\LibrarySystem\LibrarySystem\Library.edmx
 -- --------------------------------------------------
 
@@ -37,9 +37,6 @@ IF OBJECT_ID(N'[dbo].[FK_CopyResevation]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_CopyCheckedOut]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Copies] DROP CONSTRAINT [FK_CopyCheckedOut];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AccessTokenCustomer]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AccessTokens] DROP CONSTRAINT [FK_AccessTokenCustomer];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Book_inherits_Media]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Media_Book] DROP CONSTRAINT [FK_Book_inherits_Media];
@@ -76,9 +73,6 @@ GO
 IF OBJECT_ID(N'[dbo].[Media]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Media];
 GO
-IF OBJECT_ID(N'[dbo].[AccessTokens]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AccessTokens];
-GO
 IF OBJECT_ID(N'[dbo].[Media_Book]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Media_Book];
 GO
@@ -100,9 +94,7 @@ CREATE TABLE [dbo].[Customers] (
     [LastName] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [Phone] nvarchar(max)  NOT NULL,
-    [JoinDate] datetime  NOT NULL,
-    [Username] nvarchar(max)  NOT NULL,
-    [PasswordHash] nvarchar(max)  NOT NULL
+    [JoinDate] datetime  NOT NULL
 );
 GO
 
@@ -161,14 +153,6 @@ CREATE TABLE [dbo].[Media] (
     [Description] nvarchar(max)  NOT NULL,
     [Publisher] nvarchar(max)  NOT NULL,
     [Genre] nvarchar(max)  NOT NULL
-);
-GO
-
--- Creating table 'AccessTokens'
-CREATE TABLE [dbo].[AccessTokens] (
-    [Id] uniqueidentifier  NOT NULL,
-    [ExpirationDate] datetime  NOT NULL,
-    [Customer_Id] int  NOT NULL
 );
 GO
 
@@ -240,12 +224,6 @@ GO
 -- Creating primary key on [Id] in table 'Media'
 ALTER TABLE [dbo].[Media]
 ADD CONSTRAINT [PK_Media]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'AccessTokens'
-ALTER TABLE [dbo].[AccessTokens]
-ADD CONSTRAINT [PK_AccessTokens]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -374,21 +352,6 @@ GO
 CREATE INDEX [IX_FK_CopyCheckedOut]
 ON [dbo].[Copies]
     ([CheckedOut_Id]);
-GO
-
--- Creating foreign key on [Customer_Id] in table 'AccessTokens'
-ALTER TABLE [dbo].[AccessTokens]
-ADD CONSTRAINT [FK_AccessTokenCustomer]
-    FOREIGN KEY ([Customer_Id])
-    REFERENCES [dbo].[Customers]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_AccessTokenCustomer'
-CREATE INDEX [IX_FK_AccessTokenCustomer]
-ON [dbo].[AccessTokens]
-    ([Customer_Id]);
 GO
 
 -- Creating foreign key on [Id] in table 'Media_Book'

@@ -32,6 +32,5 @@ namespace LibrarySystem
         public virtual DbSet<OverDue> OverDues { get; set; }
         public virtual DbSet<Copy> Copies { get; set; }
         public virtual DbSet<Media> Media { get; set; }
-        public virtual DbSet<AccessToken> AccessTokens { get; set; }
     }
 }

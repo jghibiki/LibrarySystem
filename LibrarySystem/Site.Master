@@ -15,6 +15,13 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <style type="text/css">
+        .auto-style1 {
+            font-size: large;
+            color: #FFFFFF;
+        }
+    </style>
+
 </head>
 <body>
     <form runat="server">
@@ -42,12 +49,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Application name</a>
+                    <h1 class="auto-style1">&nbsp;Library Catalogue </h1>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -60,6 +62,8 @@
         </div>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                <p>
+                    &nbsp;</p>
             </asp:ContentPlaceHolder>
             <hr />
             <footer>

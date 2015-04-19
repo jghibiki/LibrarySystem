@@ -26,11 +26,8 @@ namespace LibrarySystem
         public string Email { get; set; }
         public string Phone { get; set; }
         public System.DateTime JoinDate { get; set; }
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
     
         public virtual ICollection<Resevation> Resevations { get; set; }
         public virtual ICollection<CheckedOut> CheckedOuts { get; set; }
-        public virtual AccessToken AccessTokens { get; set; }
     }
 }
