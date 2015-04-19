@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LibraryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LibraryModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="LibraryModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Librarians" EntityType="LibraryModel.Store.Librarians" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Resevations" EntityType="LibraryModel.Store.Resevations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CheckedOuts" EntityType="LibraryModel.Store.CheckedOuts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OverDues" EntityType="LibraryModel.Store.OverDues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Copies" EntityType="LibraryModel.Store.Copies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media" EntityType="LibraryModel.Store.Media" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AccessTokens" EntityType="LibraryModel.Store.AccessTokens" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Book" EntityType="LibraryModel.Store.Media_Book" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Video" EntityType="LibraryModel.Store.Media_Video" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Audio" EntityType="LibraryModel.Store.Media_Audio" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerResevation" Association="LibraryModel.Store.CustomerResevation">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Resevation" EntitySet="Resevations" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerCheckedOut" Association="LibraryModel.Store.CustomerCheckedOut">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="LibrarianCheckedOut" Association="LibraryModel.Store.LibrarianCheckedOut">
+      <End Role="Librarian" EntitySet="Librarians" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="CheckedOutOverDue" Association="LibraryModel.Store.CheckedOutOverDue">
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+      <End Role="OverDue" EntitySet="OverDues" />
+    </AssociationSet>
+    <AssociationSet Name="CopyMedia" Association="LibraryModel.Store.CopyMedia">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="Media" EntitySet="Media" />
+    </AssociationSet>
+    <AssociationSet Name="CopyResevation" Association="LibraryModel.Store.CopyResevation">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="Resevation" EntitySet="Resevations" />
+    </AssociationSet>
+    <AssociationSet Name="CopyCheckedOut" Association="LibraryModel.Store.CopyCheckedOut">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="AccessTokenCustomer" Association="LibraryModel.Store.AccessTokenCustomer">
+      <End Role="AccessToken" EntitySet="AccessTokens" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Book_inherits_Media" Association="LibraryModel.Store.FK_Book_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Book" EntitySet="Media_Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Video_inherits_Media" Association="LibraryModel.Store.FK_Video_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Video" EntitySet="Media_Video" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Audio_inherits_Media" Association="LibraryModel.Store.FK_Audio_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Audio" EntitySet="Media_Audio" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="JoinDate" Type="datetime" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Librarians">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resevations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="ReservationDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CheckedOuts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IssuedDate" Type="datetime" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="LibrarianId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OverDues">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReturnDate" Type="datetime" Nullable="false" />
+    <Property Name="CheckedOut_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Copies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Availability" Type="smallint" Nullable="false" />
+    <Property Name="Medium_Id" Type="int" Nullable="false" />
+    <Property Name="Resevation_Id" Type="int" Nullable="false" />
+    <Property Name="CheckedOut_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Year" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Publisher" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AccessTokens">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+    <Property Name="Customer_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ISBN" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Synopsis" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Video">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Director" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Producer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Audio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Artist" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Album" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerResevation">
+    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
+    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resevation">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerCheckedOut">
+    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckedOut">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LibrarianCheckedOut">
+    <End Role="Librarian" Type="LibraryModel.Store.Librarians" Multiplicity="1" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Librarian">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckedOut">
+        <PropertyRef Name="LibrarianId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CheckedOutOverDue">
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="1" />
+    <End Role="OverDue" Type="LibraryModel.Store.OverDues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckedOut">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OverDue">
+        <PropertyRef Name="CheckedOut_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyMedia">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="*" />
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Copy">
+        <PropertyRef Name="Medium_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyResevation">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="*" />
+    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Resevation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Copy">
+        <PropertyRef Name="Resevation_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyCheckedOut">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="*" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CheckedOut">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Copy">
+        <PropertyRef Name="CheckedOut_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AccessTokenCustomer">
+    <End Role="AccessToken" Type="LibraryModel.Store.AccessTokens" Multiplicity="*" />
+    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AccessToken">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Book_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Book" Type="LibraryModel.Store.Media_Book" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Video_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Video" Type="LibraryModel.Store.Media_Video" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Video">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Audio_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Audio" Type="LibraryModel.Store.Media_Audio" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Audio">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LibraryEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Customers" EntityType="LibraryModel.Customer" />
+          <EntitySet Name="Librarians" EntityType="LibraryModel.Librarian" />
+          <EntitySet Name="Resevations" EntityType="LibraryModel.Resevation" />
+          <EntitySet Name="CheckedOuts" EntityType="LibraryModel.CheckedOut" />
+          <EntitySet Name="OverDues" EntityType="LibraryModel.OverDue" />
+          <AssociationSet Name="CustomerResevation" Association="LibraryModel.CustomerResevation">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Resevation" EntitySet="Resevations" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerCheckedOut" Association="LibraryModel.CustomerCheckedOut">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CheckedOut" EntitySet="CheckedOuts" />
+          </AssociationSet>
+          <AssociationSet Name="LibrarianCheckedOut" Association="LibraryModel.LibrarianCheckedOut">
+            <End Role="Librarian" EntitySet="Librarians" />
+            <End Role="CheckedOut" EntitySet="CheckedOuts" />
+          </AssociationSet>
+          <AssociationSet Name="CheckedOutOverDue" Association="LibraryModel.CheckedOutOverDue">
+            <End Role="CheckedOut" EntitySet="CheckedOuts" />
+            <End Role="OverDue" EntitySet="OverDues" />
+          </AssociationSet>
+          <EntitySet Name="Copies" EntityType="LibraryModel.Copy" />
+          <EntitySet Name="Media" EntityType="LibraryModel.Media" />
+          <AssociationSet Name="CopyMedia" Association="LibraryModel.CopyMedia">
+            <End Role="Copy" EntitySet="Copies" />
+            <End Role="Media" EntitySet="Media" />
+          </AssociationSet>
+          <AssociationSet Name="CopyResevation" Association="LibraryModel.CopyResevation">
+            <End Role="Copy" EntitySet="Copies" />
+            <End Role="Resevation" EntitySet="Resevations" />
+          </AssociationSet>
+          <AssociationSet Name="CopyCheckedOut" Association="LibraryModel.CopyCheckedOut">
+            <End Role="Copy" EntitySet="Copies" />
+            <End Role="CheckedOut" EntitySet="CheckedOuts" />
+          </AssociationSet>
+          <EntitySet Name="AccessTokens" EntityType="LibraryModel.AccessToken" />
+          <AssociationSet Name="AccessTokenCustomer" Association="LibraryModel.AccessTokenCustomer">
+            <End Role="AccessToken" EntitySet="AccessTokens" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="JoinDate" Type="DateTime" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" />
+          <NavigationProperty Name="Resevations" Relationship="LibraryModel.CustomerResevation" FromRole="Customer" ToRole="Resevation" />
+          <NavigationProperty Name="CheckedOuts" Relationship="LibraryModel.CustomerCheckedOut" FromRole="Customer" ToRole="CheckedOut" />
+          <NavigationProperty Name="AccessTokens" Relationship="LibraryModel.AccessTokenCustomer" FromRole="Customer" ToRole="AccessToken" />
+        </EntityType>
+        <EntityType Name="Librarian">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <NavigationProperty Name="CheckedOuts" Relationship="LibraryModel.LibrarianCheckedOut" FromRole="Librarian" ToRole="CheckedOut" />
+        </EntityType>
+        <EntityType Name="Resevation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="ReservationDate" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="LibraryModel.CustomerResevation" FromRole="Resevation" ToRole="Customer" />
+          <Property Name="CustomerId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Copy" Relationship="LibraryModel.CopyResevation" FromRole="Resevation" ToRole="Copy" />
+        </EntityType>
+        <EntityType Name="CheckedOut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="IssuedDate" Type="DateTime" Nullable="false" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="LibraryModel.CustomerCheckedOut" FromRole="CheckedOut" ToRole="Customer" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Librarian" Relationship="LibraryModel.LibrarianCheckedOut" FromRole="CheckedOut" ToRole="Librarian" />
+          <Property Name="LibrarianId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OverDue" Relationship="LibraryModel.CheckedOutOverDue" FromRole="CheckedOut" ToRole="OverDue" />
+          <NavigationProperty Name="Copy" Relationship="LibraryModel.CopyCheckedOut" FromRole="CheckedOut" ToRole="Copy" />
+        </EntityType>
+        <EntityType Name="OverDue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="ReturnDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="CheckedOut" Relationship="LibraryModel.CheckedOutOverDue" FromRole="OverDue" ToRole="CheckedOut" />
+        </EntityType>
+        <Association Name="CustomerResevation">
+          <End Type="LibraryModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resevation">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerCheckedOut">
+          <End Type="LibraryModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CheckedOut">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LibrarianCheckedOut">
+          <End Type="LibraryModel.Librarian" Role="Librarian" Multiplicity="1" />
+          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CheckedOut">
+              <PropertyRef Name="LibrarianId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CheckedOutOverDue">
+          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="1" />
+          <End Type="LibraryModel.OverDue" Role="OverDue" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Copy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Availability" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Medium" Relationship="LibraryModel.CopyMedia" FromRole="Copy" ToRole="Media" />
+          <NavigationProperty Name="Resevation" Relationship="LibraryModel.CopyResevation" FromRole="Copy" ToRole="Resevation" />
+          <NavigationProperty Name="CheckedOut" Relationship="LibraryModel.CopyCheckedOut" FromRole="Copy" ToRole="CheckedOut" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <NavigationProperty Name="Copies" Relationship="LibraryModel.CopyMedia" FromRole="Media" ToRole="Copy" />
+          <Property Name="Title" Type="String" Nullable="false" />
+          <Property Name="Year" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Publisher" Type="String" Nullable="false" />
+          <Property Name="Genre" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book" BaseType="LibraryModel.Media">
+          <Property Name="Author" Type="String" Nullable="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" />
+          <Property Name="Synopsis" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Video" BaseType="LibraryModel.Media">
+          <Property Name="Director" Type="String" Nullable="false" />
+          <Property Name="Producer" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Audio" BaseType="LibraryModel.Media">
+          <Property Name="Artist" Type="String" Nullable="false" />
+          <Property Name="Album" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CopyMedia">
+          <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="*" />
+          <End Type="LibraryModel.Media" Role="Media" Multiplicity="1" />
+        </Association>
+        <Association Name="CopyResevation">
+          <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
+          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="1" />
+        </Association>
+        <Association Name="CopyCheckedOut">
+          <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
+          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="1" />
+        </Association>
+        <EntityType Name="AccessToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="LibraryModel.AccessTokenCustomer" FromRole="AccessToken" ToRole="Customer" />
+        </EntityType>
+        <Association Name="AccessTokenCustomer">
+          <End Type="LibraryModel.AccessToken" Role="AccessToken" Multiplicity="1" />
+          <End Type="LibraryModel.Customer" Role="Customer" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LibraryModelStoreContainer" CdmEntityContainer="LibraryEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Customer)">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Librarians">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Librarian)">
+        <MappingFragment StoreEntitySet="Librarians">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resevations">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Resevation)">
+        <MappingFragment StoreEntitySet="Resevations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CheckedOuts">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.CheckedOut)">
+        <MappingFragment StoreEntitySet="CheckedOuts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
+          <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="LibrarianId" ColumnName="LibrarianId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OverDues">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.OverDue)">
+        <MappingFragment StoreEntitySet="OverDues">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Copies">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Copy)">
+        <MappingFragment StoreEntitySet="Copies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Availability" ColumnName="Availability" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Media">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Media)">
+        <MappingFragment StoreEntitySet="Media">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+          <ScalarProperty Name="Genre" ColumnName="Genre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Book)">
+        <MappingFragment StoreEntitySet="Media_Book">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Author" ColumnName="Author" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="Synopsis" ColumnName="Synopsis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Video)">
+        <MappingFragment StoreEntitySet="Media_Video">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Director" ColumnName="Director" />
+          <ScalarProperty Name="Producer" ColumnName="Producer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Audio)">
+        <MappingFragment StoreEntitySet="Media_Audio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Artist" ColumnName="Artist" />
+          <ScalarProperty Name="Album" ColumnName="Album" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccessTokens">
+      <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.AccessToken)">
+        <MappingFragment StoreEntitySet="AccessTokens">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CheckedOutOverDue" TypeName="LibraryModel.CheckedOutOverDue" StoreEntitySet="OverDues">
+      <EndProperty Name="CheckedOut">
+        <ScalarProperty Name="Id" ColumnName="CheckedOut_Id" />
+      </EndProperty>
+      <EndProperty Name="OverDue">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CopyMedia" TypeName="LibraryModel.CopyMedia" StoreEntitySet="Copies">
+      <EndProperty Name="Media">
+        <ScalarProperty Name="Id" ColumnName="Medium_Id" />
+      </EndProperty>
+      <EndProperty Name="Copy">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CopyResevation" TypeName="LibraryModel.CopyResevation" StoreEntitySet="Copies">
+      <EndProperty Name="Resevation">
+        <ScalarProperty Name="Id" ColumnName="Resevation_Id" />
+      </EndProperty>
+      <EndProperty Name="Copy">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CopyCheckedOut" TypeName="LibraryModel.CopyCheckedOut" StoreEntitySet="Copies">
+      <EndProperty Name="CheckedOut">
+        <ScalarProperty Name="Id" ColumnName="CheckedOut_Id" />
+      </EndProperty>
+      <EndProperty Name="Copy">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AccessTokenCustomer" TypeName="LibraryModel.AccessTokenCustomer" StoreEntitySet="AccessTokens">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="Customer_Id" />
+      </EndProperty>
+      <EndProperty Name="AccessToken">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
