@@ -19,5 +19,8 @@
                 <asp:TextBox ID="phone" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <asp:Button ID="submit" runat="server" OnClick="Submit" Text="Submit" CssClass="btn btn-default"/>
+            <br />
+            <br />
+            <asp:Label ID="status" runat="server"></asp:Label>
     </div>
 </asp:Content>

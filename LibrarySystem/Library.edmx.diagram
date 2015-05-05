@@ -15,8 +15,8 @@
         <AssociationConnector Association="LibraryModel.LibrarianCheckedOut" />
         <AssociationConnector Association="LibraryModel.CheckedOutOverDue" />
         <EntityTypeShape EntityType="LibraryModel.Copy" Width="1.5" PointX="8.25" PointY="8.375" />
-        <EntityTypeShape EntityType="LibraryModel.Media" Width="1.5" PointX="11.625" PointY="8.5" />
-        <EntityTypeShape EntityType="LibraryModel.Book" Width="1.5" PointX="15.25" PointY="6" />
+        <EntityTypeShape EntityType="LibraryModel.Media" Width="1.5" PointX="11.625" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Book" PointX="11.625" PointY="11.75" Width="1.5" />
         <EntityTypeShape EntityType="LibraryModel.Video" Width="1.5" PointX="14.875" PointY="9.75" />
         <EntityTypeShape EntityType="LibraryModel.Audio" Width="1.5" PointX="17.25" PointY="7.875" />
         <InheritanceConnector EntityType="LibraryModel.Book" />

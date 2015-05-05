@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="AddBook.aspx" />
     <Content Include="AddCustomer.aspx" />
     <Content Include="AddLibrarian.aspx" />
     <Content Include="App_Data\LibraryEntities.mdf" />
@@ -186,6 +187,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddBook.aspx.cs">
+      <DependentUpon>AddBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddBook.aspx.designer.cs">
+      <DependentUpon>AddBook.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddCustomer.aspx.cs">
       <DependentUpon>AddCustomer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
