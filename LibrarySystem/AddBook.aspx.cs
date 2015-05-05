@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace LibrarySystem
 {
-    public partial class AddCustomer : System.Web.UI.Page
+    public partial class AddBook : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -16,25 +16,31 @@ namespace LibrarySystem
 
         protected void Submit(object sender, EventArgs e)
         {
-            Customer newCustomer = new Customer(){
-              FirstName = firstName.Text,
-              LastName = lastName.Text,
-              Email = email.Text,
-              Phone = phone.Text,
-              JoinDate = DateTime.UtcNow
+            Media newMedia = new Media()
+            {
+                Title = title.Text,
+                Author1 = author.Text,
+                ISBN1 = isbn.Text,
+                Year = year.Text,
+                Publisher = publisher.Text,
+                Genre = genre.Text,
+                Description = description.Text,
             };
-            
+
             try
             {
                 using (LibraryEntities db = new LibraryEntities())
                 {
-                    db.Customers.Add(newCustomer);
+                    db.Media.Add(newMedia);
                     db.SaveChanges();
 
-                    firstName.Text = "";
-                    lastName.Text = "";
-                    email.Text = "";
-                    phone.Text = "";
+                    title.Text = "";
+                    author.Text = "";
+                    isbn.Text = "";
+                    year.Text = "";
+                    publisher.Text = "";
+                    genre.Text = "";
+                    description.Text = "";
 
                     status.Text = "Successfully added!";
                 }
@@ -43,6 +49,7 @@ namespace LibrarySystem
             {
                 status.Text = "Additional unsucessful, please try again!";
             }
+
         }
     }
 }
