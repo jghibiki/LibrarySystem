@@ -24,10 +24,24 @@ namespace LibrarySystem
                 JoinDate = DateTime.UtcNow
             };
 
-            using (LibraryEntities db = new LibraryEntities())
+            try
             {
-                db.Customers.Add(newCustomer);
-                db.SaveChanges();
+                using (LibraryEntities db = new LibraryEntities())
+                {
+                    db.Customers.Add(newCustomer);
+                    db.SaveChanges();
+
+                    firstName.Text = "";
+                    lastName.Text = "";
+                    email.Text = "";
+                    phone.Text = "";
+
+                    status.Text = "Successfully added!";
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                status.Text = "Additional unsucessful, please try again!";
             }
         }
 
