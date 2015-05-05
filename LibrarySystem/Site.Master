@@ -70,6 +70,10 @@
                         </li>
                         <li><a runat="server" href="~/Search">Search</a></li>
                     </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><asp:HyperLink ID="login" runat="server" NavigateUrl="~/Logon.aspx" Text="Login"/></li>
+                    </ul>
                 </div>
             </div>
         </div>
