@@ -4,282 +4,280 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="CheckedOuts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IssuedDate" Type="datetime" Nullable="false" />
-          <Property Name="DueDate" Type="datetime" Nullable="false" />
-          <Property Name="CustomerId" Type="int" Nullable="false" />
-          <Property Name="LibrarianId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Copies">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Availability" Type="smallint" Nullable="false" />
-          <Property Name="Medium_Id" Type="int" Nullable="false" />
-          <Property Name="Resevation_Id" Type="int" Nullable="false" />
-          <Property Name="CheckedOut_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Customers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="JoinDate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Librarians">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Media">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Year" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Publisher" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ISBN" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Media_Audio">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Artist" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Album" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Media_Book">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ISBN" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Synopsis" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Media_Video">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Director" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Producer" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OverDues">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ReturnDate" Type="datetime" Nullable="false" />
-          <Property Name="CheckedOut_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Resevations">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="ReservationDate" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CustomerId" Type="int" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Audio_inherits_Media">
-          <End Role="Media" Type="Self.Media" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Media_Audio" Type="Self.Media_Audio" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Media">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Media_Audio">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Book_inherits_Media">
-          <End Role="Media" Type="Self.Media" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Media_Book" Type="Self.Media_Book" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Media">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Media_Book">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CheckedOutOverDue">
-          <End Role="CheckedOuts" Type="Self.CheckedOuts" Multiplicity="1" />
-          <End Role="OverDues" Type="Self.OverDues" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CheckedOuts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OverDues">
-              <PropertyRef Name="CheckedOut_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CopyCheckedOut">
-          <End Role="CheckedOuts" Type="Self.CheckedOuts" Multiplicity="1" />
-          <End Role="Copies" Type="Self.Copies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CheckedOuts">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Copies">
-              <PropertyRef Name="CheckedOut_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CopyMedia">
-          <End Role="Media" Type="Self.Media" Multiplicity="1" />
-          <End Role="Copies" Type="Self.Copies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Media">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Copies">
-              <PropertyRef Name="Medium_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CopyResevation">
-          <End Role="Resevations" Type="Self.Resevations" Multiplicity="1" />
-          <End Role="Copies" Type="Self.Copies" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Resevations">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Copies">
-              <PropertyRef Name="Resevation_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerCheckedOut">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="CheckedOuts" Type="Self.CheckedOuts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CheckedOuts">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerResevation">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="Resevations" Type="Self.Resevations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Resevations">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LibrarianCheckedOut">
-          <End Role="Librarians" Type="Self.Librarians" Multiplicity="1" />
-          <End Role="CheckedOuts" Type="Self.CheckedOuts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Librarians">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CheckedOuts">
-              <PropertyRef Name="LibrarianId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Video_inherits_Media">
-          <End Role="Media" Type="Self.Media" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Media_Video" Type="Self.Media_Video" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Media">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Media_Video">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="LibraryModelStoreContainer">
-          <EntitySet Name="CheckedOuts" EntityType="Self.CheckedOuts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Copies" EntityType="Self.Copies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Media_Audio" EntityType="Self.Media_Audio" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Media_Book" EntityType="Self.Media_Book" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Media_Video" EntityType="Self.Media_Video" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OverDues" EntityType="Self.OverDues" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Resevations" EntityType="Self.Resevations" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Audio_inherits_Media" Association="Self.FK_Audio_inherits_Media">
-            <End Role="Media" EntitySet="Media" />
-            <End Role="Media_Audio" EntitySet="Media_Audio" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_inherits_Media" Association="Self.FK_Book_inherits_Media">
-            <End Role="Media" EntitySet="Media" />
-            <End Role="Media_Book" EntitySet="Media_Book" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CheckedOutOverDue" Association="Self.FK_CheckedOutOverDue">
-            <End Role="CheckedOuts" EntitySet="CheckedOuts" />
-            <End Role="OverDues" EntitySet="OverDues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CopyCheckedOut" Association="Self.FK_CopyCheckedOut">
-            <End Role="CheckedOuts" EntitySet="CheckedOuts" />
-            <End Role="Copies" EntitySet="Copies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CopyMedia" Association="Self.FK_CopyMedia">
-            <End Role="Media" EntitySet="Media" />
-            <End Role="Copies" EntitySet="Copies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CopyResevation" Association="Self.FK_CopyResevation">
-            <End Role="Resevations" EntitySet="Resevations" />
-            <End Role="Copies" EntitySet="Copies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerCheckedOut" Association="Self.FK_CustomerCheckedOut">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="CheckedOuts" EntitySet="CheckedOuts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerResevation" Association="Self.FK_CustomerResevation">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Resevations" EntitySet="Resevations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LibrarianCheckedOut" Association="Self.FK_LibrarianCheckedOut">
-            <End Role="Librarians" EntitySet="Librarians" />
-            <End Role="CheckedOuts" EntitySet="CheckedOuts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Video_inherits_Media" Association="Self.FK_Video_inherits_Media">
-            <End Role="Media" EntitySet="Media" />
-            <End Role="Media_Video" EntitySet="Media_Video" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="LibraryModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LibraryModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="LibraryModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Librarians" EntityType="LibraryModel.Store.Librarians" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Resevations" EntityType="LibraryModel.Store.Resevations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CheckedOuts" EntityType="LibraryModel.Store.CheckedOuts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OverDues" EntityType="LibraryModel.Store.OverDues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Copies" EntityType="LibraryModel.Store.Copies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media" EntityType="LibraryModel.Store.Media" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Book" EntityType="LibraryModel.Store.Media_Book" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Video" EntityType="LibraryModel.Store.Media_Video" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Media_Audio" EntityType="LibraryModel.Store.Media_Audio" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerResevation" Association="LibraryModel.Store.CustomerResevation">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Resevation" EntitySet="Resevations" />
+    </AssociationSet>
+    <AssociationSet Name="CustomerCheckedOut" Association="LibraryModel.Store.CustomerCheckedOut">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="LibrarianCheckedOut" Association="LibraryModel.Store.LibrarianCheckedOut">
+      <End Role="Librarian" EntitySet="Librarians" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="CheckedOutOverDue" Association="LibraryModel.Store.CheckedOutOverDue">
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+      <End Role="OverDue" EntitySet="OverDues" />
+    </AssociationSet>
+    <AssociationSet Name="CopyMedia" Association="LibraryModel.Store.CopyMedia">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="Media" EntitySet="Media" />
+    </AssociationSet>
+    <AssociationSet Name="CopyResevation" Association="LibraryModel.Store.CopyResevation">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="Resevation" EntitySet="Resevations" />
+    </AssociationSet>
+    <AssociationSet Name="CopyCheckedOut" Association="LibraryModel.Store.CopyCheckedOut">
+      <End Role="Copy" EntitySet="Copies" />
+      <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Book_inherits_Media" Association="LibraryModel.Store.FK_Book_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Book" EntitySet="Media_Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Video_inherits_Media" Association="LibraryModel.Store.FK_Video_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Video" EntitySet="Media_Video" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Audio_inherits_Media" Association="LibraryModel.Store.FK_Audio_inherits_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="Audio" EntitySet="Media_Audio" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="JoinDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Librarians">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resevations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="ReservationDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CheckedOuts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IssuedDate" Type="datetime" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="LibrarianId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OverDues">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReturnDate" Type="datetime" Nullable="false" />
+    <Property Name="CheckedOut_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Copies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Availability" Type="smallint" Nullable="false" />
+    <Property Name="Medium_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Year" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Publisher" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Author1" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ISBN1" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ISBN" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Synopsis" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Video">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Director" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Producer" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media_Audio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Artist" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Album" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerResevation">
+    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
+    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resevation">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CustomerCheckedOut">
+    <End Role="Customer" Type="LibraryModel.Store.Customers" Multiplicity="1" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckedOut">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LibrarianCheckedOut">
+    <End Role="Librarian" Type="LibraryModel.Store.Librarians" Multiplicity="1" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Librarian">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckedOut">
+        <PropertyRef Name="LibrarianId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CheckedOutOverDue">
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="1" />
+    <End Role="OverDue" Type="LibraryModel.Store.OverDues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckedOut">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OverDue">
+        <PropertyRef Name="CheckedOut_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyMedia">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="*" />
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Copy">
+        <PropertyRef Name="Medium_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyResevation">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="1" />
+    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Copy">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resevation">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CopyCheckedOut">
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="1" />
+    <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Copy">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckedOut">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Book_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Book" Type="LibraryModel.Store.Media_Book" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Video_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Video" Type="LibraryModel.Store.Media_Video" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Video">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Audio_inherits_Media">
+    <End Role="Media" Type="LibraryModel.Store.Media" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Audio" Type="LibraryModel.Store.Media_Audio" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Audio">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -460,11 +458,27 @@
         </Association>
         <Association Name="CopyResevation">
           <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
-          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="1" />
+          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Copy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Resevation">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="CopyCheckedOut">
           <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
-          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="1" />
+          <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Copy">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CheckedOut">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -535,14 +549,14 @@
     <EntitySetMapping Name="Media">
       <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Media)">
         <MappingFragment StoreEntitySet="Media">
-          <ScalarProperty Name="ISBN1" ColumnName="ISBN" />
-                <ScalarProperty Name="Author1" ColumnName="Author" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Publisher" ColumnName="Publisher" />
           <ScalarProperty Name="Genre" ColumnName="Genre" />
+          <ScalarProperty Name="Author1" ColumnName="Author1" />
+          <ScalarProperty Name="ISBN1" ColumnName="ISBN1" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Book)">
@@ -579,22 +593,6 @@
     <AssociationSetMapping Name="CopyMedia" TypeName="LibraryModel.CopyMedia" StoreEntitySet="Copies">
       <EndProperty Name="Media">
         <ScalarProperty Name="Id" ColumnName="Medium_Id" />
-      </EndProperty>
-      <EndProperty Name="Copy">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="CopyResevation" TypeName="LibraryModel.CopyResevation" StoreEntitySet="Copies">
-      <EndProperty Name="Resevation">
-        <ScalarProperty Name="Id" ColumnName="Resevation_Id" />
-      </EndProperty>
-      <EndProperty Name="Copy">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="CopyCheckedOut" TypeName="LibraryModel.CopyCheckedOut" StoreEntitySet="Copies">
-      <EndProperty Name="CheckedOut">
-        <ScalarProperty Name="Id" ColumnName="CheckedOut_Id" />
       </EndProperty>
       <EndProperty Name="Copy">
         <ScalarProperty Name="Id" ColumnName="Id" />

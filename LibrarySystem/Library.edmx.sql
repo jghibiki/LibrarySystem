@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/19/2015 15:01:31
--- Generated from EDMX file: C:\Users\ACM Admin\Source\Repos\LibrarySystem\LibrarySystem\LibrarySystem\Library.edmx
+-- Date Created: 05/06/2015 18:37:10
+-- Generated from EDMX file: C:\Users\wk\Desktop\LibrarySystem\LibrarySystem\Library.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [LibraryEntities];
+USE [C:\Users\wk\Desktop\LibrarySystem\LibrarySystem\App_Data\LibraryEntities.mdf];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -33,10 +33,10 @@ IF OBJECT_ID(N'[dbo].[FK_CopyMedia]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Copies] DROP CONSTRAINT [FK_CopyMedia];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CopyResevation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Copies] DROP CONSTRAINT [FK_CopyResevation];
+    ALTER TABLE [dbo].[Resevations] DROP CONSTRAINT [FK_CopyResevation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CopyCheckedOut]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Copies] DROP CONSTRAINT [FK_CopyCheckedOut];
+    ALTER TABLE [dbo].[CheckedOuts] DROP CONSTRAINT [FK_CopyCheckedOut];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Book_inherits_Media]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Media_Book] DROP CONSTRAINT [FK_Book_inherits_Media];
@@ -139,9 +139,7 @@ GO
 CREATE TABLE [dbo].[Copies] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Availability] smallint  NOT NULL,
-    [Medium_Id] int  NOT NULL,
-    [Resevation_Id] int  NOT NULL,
-    [CheckedOut_Id] int  NOT NULL
+    [Medium_Id] int  NOT NULL
 );
 GO
 
@@ -152,7 +150,9 @@ CREATE TABLE [dbo].[Media] (
     [Year] nvarchar(max)  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [Publisher] nvarchar(max)  NOT NULL,
-    [Genre] nvarchar(max)  NOT NULL
+    [Genre] nvarchar(max)  NOT NULL,
+    [Author1] nvarchar(max)  NOT NULL,
+    [ISBN1] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -256,7 +256,6 @@ ADD CONSTRAINT [FK_CustomerResevation]
     REFERENCES [dbo].[Customers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerResevation'
 CREATE INDEX [IX_FK_CustomerResevation]
@@ -271,7 +270,6 @@ ADD CONSTRAINT [FK_CustomerCheckedOut]
     REFERENCES [dbo].[Customers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCheckedOut'
 CREATE INDEX [IX_FK_CustomerCheckedOut]
@@ -286,7 +284,6 @@ ADD CONSTRAINT [FK_LibrarianCheckedOut]
     REFERENCES [dbo].[Librarians]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LibrarianCheckedOut'
 CREATE INDEX [IX_FK_LibrarianCheckedOut]
@@ -301,7 +298,6 @@ ADD CONSTRAINT [FK_CheckedOutOverDue]
     REFERENCES [dbo].[CheckedOuts]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CheckedOutOverDue'
 CREATE INDEX [IX_FK_CheckedOutOverDue]
@@ -316,7 +312,6 @@ ADD CONSTRAINT [FK_CopyMedia]
     REFERENCES [dbo].[Media]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CopyMedia'
 CREATE INDEX [IX_FK_CopyMedia]
@@ -324,34 +319,22 @@ ON [dbo].[Copies]
     ([Medium_Id]);
 GO
 
--- Creating foreign key on [Resevation_Id] in table 'Copies'
-ALTER TABLE [dbo].[Copies]
+-- Creating foreign key on [Id] in table 'Resevations'
+ALTER TABLE [dbo].[Resevations]
 ADD CONSTRAINT [FK_CopyResevation]
-    FOREIGN KEY ([Resevation_Id])
-    REFERENCES [dbo].[Resevations]
+    FOREIGN KEY ([Id])
+    REFERENCES [dbo].[Copies]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_CopyResevation'
-CREATE INDEX [IX_FK_CopyResevation]
-ON [dbo].[Copies]
-    ([Resevation_Id]);
-GO
-
--- Creating foreign key on [CheckedOut_Id] in table 'Copies'
-ALTER TABLE [dbo].[Copies]
+-- Creating foreign key on [Id] in table 'CheckedOuts'
+ALTER TABLE [dbo].[CheckedOuts]
 ADD CONSTRAINT [FK_CopyCheckedOut]
-    FOREIGN KEY ([CheckedOut_Id])
-    REFERENCES [dbo].[CheckedOuts]
+    FOREIGN KEY ([Id])
+    REFERENCES [dbo].[Copies]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_CopyCheckedOut'
-CREATE INDEX [IX_FK_CopyCheckedOut]
-ON [dbo].[Copies]
-    ([CheckedOut_Id]);
 GO
 
 -- Creating foreign key on [Id] in table 'Media_Book'
