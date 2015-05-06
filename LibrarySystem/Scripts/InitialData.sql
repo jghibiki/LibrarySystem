@@ -1,7 +1,5 @@
 ﻿SET QUOTED_IDENTIFIER OFF;
 GO
-USE [LibraryEntities];
-GO
 
 -- Librarians --
 SET IDENTITY_INSERT [dbo].[Librarians] ON
@@ -17,10 +15,10 @@ SET IDENTITY_INSERT [dbo].[Customers] OFF
 
 -- Media First --
 SET IDENTITY_INSERT [dbo].[Media] ON
-INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre]) VALUES (1, N'Introduction to Databases', N'1998', N'CSci 366 Textbook', N'Wiley Publishing', N'Textbook')
-INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre]) VALUES (2, N'Angels & Demons', N'2003', N'Angels and demons.', N'Scholastic', N'Fiction')
-INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre]) VALUES (3, N'C How to Program', N'2006', N'How to Program in C', N'Deitel Publishing', N'Self-Learning Manual')
-INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre]) VALUES (4, N'Fifty Shades of Green', N'2014', N'Green colors and what not', N'Independent', N'Romance Comedy')
+INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre], [Author1], [ISBN1]) VALUES (1, N'Introduction to Databases', N'1998', N'CSci 366 Textbook', N'Wiley Publishing', N'Textbook', N'FamousAuthor', N'5678910')
+INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre], [Author1], [ISBN1]) VALUES (2, N'Angels & Demons', N'2003', N'Angels and demons.', N'Scholastic', N'Fiction', N'Dan Brown', N'1923098')
+INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre], [Author1], [ISBN1]) VALUES (3, N'C How to Program', N'2006', N'How to Program in C', N'Deitel Publishing', N'Self-Learning Manual', N'Elite Programmer', N'1230913')
+INSERT INTO [dbo].[Media] ([Id], [Title], [Year], [Description], [Publisher], [Genre], [Author1], [ISBN1]) VALUES (4, N'Fifty Shades of Green', N'2014', N'Green colors and what not', N'Independent', N'Romance Comedy', N'Cody O'' Brien', N'123912830')
 SET IDENTITY_INSERT [dbo].[Media] OFF
 
 -- Then Media Books -- 
