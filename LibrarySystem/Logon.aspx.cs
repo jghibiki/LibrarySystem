@@ -20,16 +20,20 @@ namespace LibrarySystem
             String username = UserEmail.Text;
             String password = Password.Text;
 
-            using(LibraryEntities db = new LibraryEntities()){
+            using (LibraryEntities db = new LibraryEntities())
+            {
                 var user = (from c in db.Customers
-                           where c.Email.Equals(username, StringComparison.CurrentCultureIgnoreCase)
-                           select c).FirstOrDefault();
+                            where c.Email.Equals(username, StringComparison.CurrentCultureIgnoreCase)
+                            select c).FirstOrDefault();
 
-                if(user != null){
+                if (user != null)
+                {
                     FormsAuthentication.RedirectFromLoginPage(user.Email, true);
-                } else{
+                }
+                else
+                {
                     Msg.Text = "Invalid username/password combination.";
-                }      
+                }
             }
         }
     }

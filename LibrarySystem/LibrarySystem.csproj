@@ -111,15 +111,20 @@
     <Content Include="App_Data\LibraryEntities_log.ldf">
       <DependentUpon>LibraryEntities.mdf</DependentUpon>
     </Content>
+    <Content Include="Checkout.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Library.edmx.sql" />
+    <Content Include="Logon.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="SearchCustomer.aspx" />
+    <Content Include="SearchLibrarian.aspx" />
+    <Content Include="Signout.aspx" />
     <EntityDeploy Include="Library.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Library.Designer.cs</LastGenOutput>
@@ -219,6 +224,13 @@
     <Compile Include="CheckedOut.cs">
       <DependentUpon>Library.tt</DependentUpon>
     </Compile>
+    <Compile Include="Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Copy.cs">
       <DependentUpon>Library.tt</DependentUpon>
     </Compile>
@@ -227,6 +239,13 @@
     </Compile>
     <Compile Include="Librarian.cs">
       <DependentUpon>Library.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Logon.aspx.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logon.aspx.designer.cs">
+      <DependentUpon>Logon.aspx</DependentUpon>
     </Compile>
     <Compile Include="Media.cs">
       <DependentUpon>Library.tt</DependentUpon>
@@ -278,6 +297,27 @@
     <Compile Include="Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SearchCustomer.aspx.cs">
+      <DependentUpon>SearchCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchCustomer.aspx.designer.cs">
+      <DependentUpon>SearchCustomer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchLibrarian.aspx.cs">
+      <DependentUpon>SearchLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchLibrarian.aspx.designer.cs">
+      <DependentUpon>SearchLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Signout.aspx.cs">
+      <DependentUpon>Signout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Signout.aspx.designer.cs">
+      <DependentUpon>Signout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -317,7 +357,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>20014</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
