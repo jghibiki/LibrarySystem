@@ -10,7 +10,7 @@
 namespace LibrarySystem {
     
     
-    public partial class SearchCustomer {
+    public partial class WebForm1 {
         
         /// <summary>
         /// searchOption control.

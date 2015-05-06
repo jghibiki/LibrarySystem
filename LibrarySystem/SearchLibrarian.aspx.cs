@@ -13,6 +13,7 @@ namespace LibrarySystem
         List<String> validColumns = new List<String>()
         { "Id", "FirstName", "LastName", "Email", "Phone"
         };
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -23,7 +24,8 @@ namespace LibrarySystem
             String searchBy = searchOption.SelectedValue;
             String searchKeyword = searchValue.Text;
 
-            if(!validColumns.Contains(searchBy) || searchBy == ""){
+            if (!validColumns.Contains(searchBy) || searchBy == "")
+            {
                 return; // Prevent sql injection
             }
 
@@ -38,7 +40,7 @@ namespace LibrarySystem
                 }
                 else
                 {
-                    resultList = db.Librarians.SqlQuery("SELECT * FROM dbo.Librarians WHERE " + searchBy + " LIKE '%'+@keyword+'%'", 
+                    resultList = db.Librarians.SqlQuery("SELECT * FROM dbo.Librarians WHERE " + searchBy + " LIKE '%'+@keyword+'%'",
                         new SqlParameter("keyword", searchKeyword)).ToList();
                 }
 

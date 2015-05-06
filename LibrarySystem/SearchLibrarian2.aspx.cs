@@ -8,12 +8,11 @@ using System.Web.UI.WebControls;
 
 namespace LibrarySystem
 {
-    public partial class SearchCustomer : System.Web.UI.Page
+    public partial class SearchLibrarian : System.Web.UI.Page
     {
         List<String> validColumns = new List<String>()
         { "Id", "FirstName", "LastName", "Email", "Phone"
         };
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -24,23 +23,22 @@ namespace LibrarySystem
             String searchBy = searchOption.SelectedValue;
             String searchKeyword = searchValue.Text;
 
-            if (!validColumns.Contains(searchBy) || searchBy == "")
-            {
+            if(!validColumns.Contains(searchBy) || searchBy == ""){
                 return; // Prevent sql injection
             }
 
             // Perform search
             using (LibraryEntities db = new LibraryEntities())
             {
-                List<Customer> resultList;
+                List<Librarian> resultList;
                 if (searchBy == "Id")
                 {
-                    resultList = db.Customers.SqlQuery("SELECT * FROM dbo.Customers WHERE Id = @keyword", new SqlParameter("keyword", searchKeyword)).ToList();
+                    resultList = db.Librarians.SqlQuery("SELECT * FROM dbo.Librarians WHERE Id = @keyword", new SqlParameter("keyword", searchKeyword)).ToList();
 
                 }
                 else
                 {
-                    resultList = db.Customers.SqlQuery("SELECT * FROM dbo.Customers WHERE " + searchBy + " LIKE '%'+@keyword+'%'",
+                    resultList = db.Librarians.SqlQuery("SELECT * FROM dbo.Librarians WHERE " + searchBy + " LIKE '%'+@keyword+'%'", 
                         new SqlParameter("keyword", searchKeyword)).ToList();
                 }
 
