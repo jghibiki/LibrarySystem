@@ -28,7 +28,7 @@ namespace LibrarySystem
 
                 if (user != null)
                 {
-                    FormsAuthentication.RedirectFromLoginPage(user.Email, true);
+                    FormsAuthentication.RedirectFromLoginPage(user.Id.ToString(), true);
                 }
                 else
                 {
