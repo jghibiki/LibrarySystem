@@ -10,9 +10,11 @@ namespace LibrarySystem
 {
     public partial class Signout : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
+            Session.Abandon();
             FormsAuthentication.SignOut();
+            Response.Redirect("~");
         }
     }
 }
