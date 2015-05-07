@@ -36,13 +36,13 @@
       <End Role="Copy" EntitySet="Copies" />
       <End Role="Media" EntitySet="Media" />
     </AssociationSet>
-    <AssociationSet Name="CopyResevation" Association="LibraryModel.Store.CopyResevation">
-      <End Role="Copy" EntitySet="Copies" />
-      <End Role="Resevation" EntitySet="Resevations" />
-    </AssociationSet>
     <AssociationSet Name="CopyCheckedOut" Association="LibraryModel.Store.CopyCheckedOut">
       <End Role="Copy" EntitySet="Copies" />
       <End Role="CheckedOut" EntitySet="CheckedOuts" />
+    </AssociationSet>
+    <AssociationSet Name="ResevationCopy" Association="LibraryModel.Store.ResevationCopy">
+      <End Role="Resevation" EntitySet="Resevations" />
+      <End Role="Copy" EntitySet="Copies" />
     </AssociationSet>
     <AssociationSet Name="FK_Book_inherits_Media" Association="LibraryModel.Store.FK_Book_inherits_Media">
       <End Role="Media" EntitySet="Media" />
@@ -83,9 +83,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="ReservationDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReservationDate" Type="datetime" Nullable="false" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="Copy_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CheckedOuts">
     <Key>
@@ -211,18 +211,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="CopyResevation">
-    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="1" />
-    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Copy">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Resevation">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="CopyCheckedOut">
     <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="1" />
     <End Role="CheckedOut" Type="LibraryModel.Store.CheckedOuts" Multiplicity="0..1" />
@@ -232,6 +220,18 @@
       </Principal>
       <Dependent Role="CheckedOut">
         <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ResevationCopy">
+    <End Role="Resevation" Type="LibraryModel.Store.Resevations" Multiplicity="*" />
+    <End Role="Copy" Type="LibraryModel.Store.Copies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Copy">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Resevation">
+        <PropertyRef Name="Copy_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -309,13 +309,13 @@
             <End Role="Copy" EntitySet="Copies" />
             <End Role="Media" EntitySet="Media" />
           </AssociationSet>
-          <AssociationSet Name="CopyResevation" Association="LibraryModel.CopyResevation">
-            <End Role="Copy" EntitySet="Copies" />
-            <End Role="Resevation" EntitySet="Resevations" />
-          </AssociationSet>
           <AssociationSet Name="CopyCheckedOut" Association="LibraryModel.CopyCheckedOut">
             <End Role="Copy" EntitySet="Copies" />
             <End Role="CheckedOut" EntitySet="CheckedOuts" />
+          </AssociationSet>
+          <AssociationSet Name="ResevationCopy" Association="LibraryModel.ResevationCopy">
+            <End Role="Resevation" EntitySet="Resevations" />
+            <End Role="Copy" EntitySet="Copies" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
@@ -347,11 +347,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ReservationDate" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ReservationDate" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="LibraryModel.CustomerResevation" FromRole="Resevation" ToRole="Customer" />
           <Property Name="CustomerId" Nullable="false" Type="Int32" />
-          <NavigationProperty Name="Copy" Relationship="LibraryModel.CopyResevation" FromRole="Resevation" ToRole="Copy" />
+          <NavigationProperty Name="Copy" Relationship="LibraryModel.ResevationCopy" FromRole="Resevation" ToRole="Copy" />
         </EntityType>
         <EntityType Name="CheckedOut">
           <Key>
@@ -422,7 +421,6 @@
           <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="Availability" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Medium" Relationship="LibraryModel.CopyMedia" FromRole="Copy" ToRole="Media" />
-          <NavigationProperty Name="Resevation" Relationship="LibraryModel.CopyResevation" FromRole="Copy" ToRole="Resevation" />
           <NavigationProperty Name="CheckedOut" Relationship="LibraryModel.CopyCheckedOut" FromRole="Copy" ToRole="CheckedOut" />
         </EntityType>
         <EntityType Name="Media">
@@ -456,18 +454,6 @@
           <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="*" />
           <End Type="LibraryModel.Media" Role="Media" Multiplicity="1" />
         </Association>
-        <Association Name="CopyResevation">
-          <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
-          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Copy">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Resevation">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CopyCheckedOut">
           <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
           <End Type="LibraryModel.CheckedOut" Role="CheckedOut" Multiplicity="0..1" />
@@ -479,6 +465,10 @@
               <PropertyRef Name="Id" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="ResevationCopy">
+          <End Type="LibraryModel.Resevation" Role="Resevation" Multiplicity="0..1" />
+          <End Type="LibraryModel.Copy" Role="Copy" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -513,7 +503,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(LibraryModel.Resevation)">
         <MappingFragment StoreEntitySet="Resevations">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
           <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
         </MappingFragment>
@@ -595,6 +584,14 @@
         <ScalarProperty Name="Id" ColumnName="Medium_Id" />
       </EndProperty>
       <EndProperty Name="Copy">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ResevationCopy" TypeName="LibraryModel.ResevationCopy" StoreEntitySet="Resevations">
+      <EndProperty Name="Copy">
+        <ScalarProperty Name="Id" ColumnName="Copy_Id" />
+      </EndProperty>
+      <EndProperty Name="Resevation">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>

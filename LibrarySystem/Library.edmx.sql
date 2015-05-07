@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/06/2015 18:37:10
--- Generated from EDMX file: C:\Users\wk\Desktop\LibrarySystem\LibrarySystem\Library.edmx
+-- Date Created: 05/07/2015 08:31:45
+-- Generated from EDMX file: C:\Users\jordan\Source\Repos\LibrarySystem\LibrarySystem\Library.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [C:\Users\wk\Desktop\LibrarySystem\LibrarySystem\App_Data\LibraryEntities.mdf];
+USE [LibraryEntities];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -111,9 +111,9 @@ GO
 -- Creating table 'Resevations'
 CREATE TABLE [dbo].[Resevations] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Date] datetime  NOT NULL,
-    [ReservationDate] nvarchar(max)  NOT NULL,
-    [CustomerId] int  NOT NULL
+    [ReservationDate] datetime  NOT NULL,
+    [CustomerId] int  NOT NULL,
+    [Copy_Id] int  NOT NULL
 );
 GO
 
@@ -256,6 +256,7 @@ ADD CONSTRAINT [FK_CustomerResevation]
     REFERENCES [dbo].[Customers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerResevation'
 CREATE INDEX [IX_FK_CustomerResevation]
@@ -270,6 +271,7 @@ ADD CONSTRAINT [FK_CustomerCheckedOut]
     REFERENCES [dbo].[Customers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CustomerCheckedOut'
 CREATE INDEX [IX_FK_CustomerCheckedOut]
@@ -284,6 +286,7 @@ ADD CONSTRAINT [FK_LibrarianCheckedOut]
     REFERENCES [dbo].[Librarians]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_LibrarianCheckedOut'
 CREATE INDEX [IX_FK_LibrarianCheckedOut]
@@ -298,6 +301,7 @@ ADD CONSTRAINT [FK_CheckedOutOverDue]
     REFERENCES [dbo].[CheckedOuts]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CheckedOutOverDue'
 CREATE INDEX [IX_FK_CheckedOutOverDue]
@@ -312,20 +316,12 @@ ADD CONSTRAINT [FK_CopyMedia]
     REFERENCES [dbo].[Media]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CopyMedia'
 CREATE INDEX [IX_FK_CopyMedia]
 ON [dbo].[Copies]
     ([Medium_Id]);
-GO
-
--- Creating foreign key on [Id] in table 'Resevations'
-ALTER TABLE [dbo].[Resevations]
-ADD CONSTRAINT [FK_CopyResevation]
-    FOREIGN KEY ([Id])
-    REFERENCES [dbo].[Copies]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating foreign key on [Id] in table 'CheckedOuts'
@@ -335,6 +331,21 @@ ADD CONSTRAINT [FK_CopyCheckedOut]
     REFERENCES [dbo].[Copies]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Copy_Id] in table 'Resevations'
+ALTER TABLE [dbo].[Resevations]
+ADD CONSTRAINT [FK_ResevationCopy]
+    FOREIGN KEY ([Copy_Id])
+    REFERENCES [dbo].[Copies]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ResevationCopy'
+CREATE INDEX [IX_FK_ResevationCopy]
+ON [dbo].[Resevations]
+    ([Copy_Id]);
 GO
 
 -- Creating foreign key on [Id] in table 'Media_Book'

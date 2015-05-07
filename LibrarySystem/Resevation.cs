@@ -15,8 +15,7 @@ namespace LibrarySystem
     public partial class Resevation
     {
         public int Id { get; set; }
-        public System.DateTime Date { get; set; }
-        public string ReservationDate { get; set; }
+        public System.DateTime ReservationDate { get; set; }
         public int CustomerId { get; set; }
     
         public virtual Customer Customer { get; set; }

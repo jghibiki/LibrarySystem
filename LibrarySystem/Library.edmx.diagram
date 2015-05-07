@@ -23,8 +23,8 @@
         <InheritanceConnector EntityType="LibraryModel.Audio" />
         <InheritanceConnector EntityType="LibraryModel.Video" />
         <AssociationConnector Association="LibraryModel.CopyMedia" />
-        <AssociationConnector Association="LibraryModel.CopyResevation" />
         <AssociationConnector Association="LibraryModel.CopyCheckedOut" />
+        <AssociationConnector Association="LibraryModel.ResevationCopy" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

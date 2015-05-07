@@ -18,8 +18,8 @@ namespace LibrarySystem
         {
             using (LibraryEntities db = new LibraryEntities())
             {
-                CustomersGridView.DataSource = db.Customers.ToList();
-                CustomersGridView.DataBind();
+                //CustomersGridView.DataSource = db.Customers.ToList();
+                //CustomersGridView.DataBind();
             }
         }
 

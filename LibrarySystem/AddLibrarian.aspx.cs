@@ -15,20 +15,19 @@ namespace LibrarySystem
         }
         protected void Submit(object sender, EventArgs e)
         {
-            Customer newCustomer = new Customer()
+            Librarian newCustomer = new Librarian()
             {
                 FirstName = firstName.Text,
                 LastName = lastName.Text,
                 Email = email.Text,
                 Phone = phone.Text,
-                JoinDate = DateTime.UtcNow
             };
 
             try
             {
                 using (LibraryEntities db = new LibraryEntities())
                 {
-                    db.Customers.Add(newCustomer);
+                    db.Librarians.Add(newCustomer);
                     db.SaveChanges();
 
                     firstName.Text = "";

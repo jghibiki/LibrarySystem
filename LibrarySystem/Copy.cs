@@ -18,7 +18,6 @@ namespace LibrarySystem
         public short Availability { get; set; }
     
         public virtual Media Medium { get; set; }
-        public virtual Resevation Resevation { get; set; }
         public virtual CheckedOut CheckedOut { get; set; }
     }
 }

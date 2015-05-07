@@ -73,7 +73,6 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a runat="server" href="~/AddBook">Add</a></li>
                                 <li><a runat="server" href="~/SearchBook">Search</a></li>
-                                <li id="CheckoutLink" runat="server"><a runat="server" href="~/Checkout">Checkout Books</a></li>
                             </ul>
                         </li>
                         <li id="MyBooksLink"  runat="server"><a runat="server" href="~/CheckedOut">View My Items</a></li>

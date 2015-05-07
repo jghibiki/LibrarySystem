@@ -17,7 +17,6 @@ namespace LibrarySystem
         {
             if (Context.User != null && Context.User.Identity.IsAuthenticated)
             {
-                CheckoutLink.Visible = true;
                 MyBooksLink.Visible = true;
 
                 login.NavigateUrl = "~/Signout.aspx";
@@ -25,7 +24,6 @@ namespace LibrarySystem
             }
             else
             {
-                CheckoutLink.Visible = false;
                 MyBooksLink.Visible = false;
             }
         }
