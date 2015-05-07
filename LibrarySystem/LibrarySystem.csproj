@@ -178,7 +178,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Search.aspx" />
+    <Content Include="SearchBook.aspx" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -299,12 +299,12 @@
     <Compile Include="Result.aspx.designer.cs">
       <DependentUpon>Result.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Search.aspx.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
+    <Compile Include="SearchBook.aspx.cs">
+      <DependentUpon>SearchBook.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Search.aspx.designer.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
+    <Compile Include="SearchBook.aspx.designer.cs">
+      <DependentUpon>SearchBook.aspx</DependentUpon>
     </Compile>
     <Compile Include="SearchCustomer.aspx.cs">
       <DependentUpon>SearchCustomer.aspx</DependentUpon>
