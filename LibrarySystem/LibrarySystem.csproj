@@ -118,10 +118,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Library.edmx.sql" />
     <Content Include="Logon.aspx" />
+    <Content Include="MyBooks.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\InitialData.sql" />
     <Content Include="SearchCustomer.aspx" />
     <Content Include="SearchLibrarian.aspx" />
     <Content Include="Signout.aspx" />
@@ -249,6 +251,13 @@
     </Compile>
     <Compile Include="Media.cs">
       <DependentUpon>Library.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyBooks.aspx.cs">
+      <DependentUpon>MyBooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyBooks.aspx.designer.cs">
+      <DependentUpon>MyBooks.aspx</DependentUpon>
     </Compile>
     <Compile Include="OverDue.cs">
       <DependentUpon>Library.tt</DependentUpon>
