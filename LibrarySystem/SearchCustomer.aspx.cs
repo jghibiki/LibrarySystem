@@ -16,7 +16,11 @@ namespace LibrarySystem
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            using (LibraryEntities db = new LibraryEntities())
+            {
+                CustomersGridView.DataSource = db.Customers.ToList();
+                CustomersGridView.DataBind();
+            }
         }
 
         protected void searchButton_Click(object sender, EventArgs e)

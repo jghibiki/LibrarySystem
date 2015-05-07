@@ -16,8 +16,9 @@
                 <asp:TextBox ID="searchValue" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <asp:Button ID="searchButton" Text="Search" runat="server" OnClick="searchButton_Click" CssClass="form-control btn btn-primary"></asp:Button>
+            <br /><br /><br />
 
-            <asp:GridView ID="CustomersGridView" runat="server" AutoGenerateColumns="False">
+            <asp:GridView ID="CustomersGridView" runat="server" AutoGenerateColumns="False" Width="1205px">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="CourseID" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="FirstName" HeaderText="First Name" SortExpression="FirstName" />
