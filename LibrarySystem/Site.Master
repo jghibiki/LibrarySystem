@@ -69,10 +69,12 @@
                             </ul>
                         </li>
                         <li><a runat="server" href="~/Search">Search</a></li>
+                        <li id="CheckoutLink" runat="server"><a runat="server" href="~/Checkout">Checkout Books</a></li>
+                        <li id="MyBooksLink"  runat="server"><a runat="server" href="~/MyBooks">My Books</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><asp:HyperLink ID="login" runat="server" NavigateUrl="~/Logon.aspx" Text="Login"/></li>
+                        <li><asp:HyperLink ID="login" runat="server" NavigateUrl="~/Logon" Text="Login"/></li>
                     </ul>
                 </div>
             </div>
