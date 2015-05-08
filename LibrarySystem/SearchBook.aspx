@@ -14,9 +14,8 @@
 &nbsp;<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" Width="71px" />
 </p>
 <p>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCommand="OnRowCommand">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCommand="OnRowCommand" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
         <Columns>
-            <asp:BoundField DataField="Id" HeaderText="Id" SortExpression="Id" ReadOnly="True" />
             <asp:BoundField DataField="Author1" HeaderText="Author" SortExpression="Author" />
             <asp:BoundField DataField="ISBN1" HeaderText="ISBN" SortExpression="ISBN" />
             <asp:BoundField DataField="Description" HeaderText="Description" SortExpression="Description" />

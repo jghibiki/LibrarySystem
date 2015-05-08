@@ -4,7 +4,6 @@
             <div class="form-group">
                 <label for="searchOption" class="control-label">Search by</label>
                 <asp:DropDownList ID="searchOption" runat="server" CssClass="form-control">
-                    <asp:ListItem Text="Customer ID" Value="Id"></asp:ListItem>
                     <asp:ListItem Text="First Name" Value="FirstName"></asp:ListItem>
                     <asp:ListItem Text="Last Name" Value="LastName"></asp:ListItem>
                     <asp:ListItem Text="Email" Value="Email"></asp:ListItem>
@@ -19,7 +18,6 @@
             
             <asp:GridView ID="CustomersGridView" runat="server" AutoGenerateColumns="False">
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="CourseID" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="FirstName" HeaderText="First Name" SortExpression="FirstName" />
                     <asp:BoundField DataField="LastName" HeaderText="Last Name" SortExpression="LastName" />
                     <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" />

@@ -11,7 +11,7 @@ namespace LibrarySystem
     public partial class SearchLibrarian : System.Web.UI.Page
     {
         List<String> validColumns = new List<String>()
-        { "Id", "FirstName", "LastName", "Email", "Phone"
+        { "FirstName", "LastName", "Email", "Phone"
         };
 
         protected void Page_Load(object sender, EventArgs e)

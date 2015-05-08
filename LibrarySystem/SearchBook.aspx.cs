@@ -21,7 +21,7 @@ namespace LibrarySystem
             {
                 if (DropDownList1.SelectedValue.Equals("Title"))
                 {
-                    var selectItems = db.Media.Where(x => x.Title == TextBox1.Text).ToList();
+                    var selectItems = db.Media.Where(x => x.Title.Contains(TextBox1.Text)).ToList();
 
                     GridView1.DataSource = selectItems;
                     GridView1.DataBind();
@@ -58,22 +58,23 @@ namespace LibrarySystem
             {
                 status.Text = "No Copies Available to be reserved.";
             }
-
-            using (var db = new LibraryEntities())
+            else
             {
-                int id = int.Parse(Context.User.Identity.Name);
-                Customer customer = db.Customers.First(x => x.Id == id);
-                Resevation reservation = new Resevation()
+                using (var db = new LibraryEntities())
                 {
-                    Copy = copy,
-                    CustomerId = customer.Id,
-                    ReservationDate = DateTime.UtcNow
-                };
+                    int id = int.Parse(Context.User.Identity.Name);
+                    Customer customer = db.Customers.First(x => x.Id == id);
+                    Resevation reservation = new Resevation()
+                    {
+                        ReservationDate = DateTime.UtcNow,
+                        CustomerId = customer.Id,
+                        Copy = copy
+                    };
 
-                db.Resevations.Add(reservation);
-                db.SaveChanges();
+                    db.Resevations.Add(reservation);
+                    db.SaveChanges();
+                }
             }
-
         }
 
         protected void Checkout(GridViewRow row)
@@ -85,40 +86,49 @@ namespace LibrarySystem
                 status.Text = "No Copies Available to be checked out.";
             }
 
-            
-            
+
+
         }
 
         protected Copy GetAvailableCopy(GridViewRow row)
         {
             using (var db = new LibraryEntities())
             {
-                int index = int.Parse(row.Cells[0].Text);
-                var allCopies = db.Copies.Where(x => x.Medium.Id == index).ToList();
-
-                foreach (var copy in allCopies)
+                try
                 {
-                    bool notReserved = false;
-                    bool notCheckedOut = false;
+                    int index = int.Parse(row.Cells[1].Text);
+                    var allCopies = db.Copies.Where(x => x.Medium.Id == index).ToList();
 
-                    var reservation = db.Resevations.Count(x => x.Copy == copy);
-                    if (reservation == 0)
+                    foreach (var copy in allCopies)
                     {
-                        notReserved = true;
-                    }
+                        bool notReserved = false;
+                        bool notCheckedOut = false;
 
-                    var checkedOut = db.CheckedOuts.Count(x => x.Copy == copy);
-                    if (checkedOut == 0)
-                    {
-                        notCheckedOut = true;
-                    }
-                    if (notReserved && notCheckedOut)
-                    {
-                        return copy;
+                        var reservation = db.Resevations.Count(x => x.Id == copy.Id);
+                        if (reservation == 0)
+                        {
+                            notReserved = true;
+                        }
+
+                        var checkedOut = db.CheckedOuts.Count(x => x.Id == copy.Id);
+                        if (checkedOut == 0)
+                        {
+                            notCheckedOut = true;
+                        }
+                        if (notReserved && notCheckedOut)
+                        {
+                            return copy;
+                        }
                     }
                 }
+                catch (Exception e){}
                 return null;
             }
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
